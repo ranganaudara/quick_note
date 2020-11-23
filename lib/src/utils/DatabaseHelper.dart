@@ -51,16 +51,17 @@ class DatabaseHelper {
     return dbInstance;
   }
 
-  Future<void> insertNote(Note note) async {
+  Future insertNote(Note note) async {
     final Database db = await database;
     var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM notes");
 
     int id = table.first["id"];
 
-    await db.rawInsert(
+    var res = await db.rawInsert(
         "INSERT Into notes (id,title,body)"
-            " VALUES (?,?)",
+            " VALUES (?,?,?)",
         [id, note.title, note.body]);
+    return res;
   }
 
   Future<List<Note>> getAllNotes() async {
@@ -72,17 +73,13 @@ class DatabaseHelper {
     });
   }
 
-  Future addReminder(Note note) async {
-    final db = await database;
-    var res;
-    var table = await db.rawQuery("SELECT MAX(id)+1 as id FROM notes");
-
-    int id = table.first["id"];
-
-    res = await db.rawInsert(
-        "INSERT Into notes (id, title, body)"
+  Future updateNote(Note note) async {
+    final Database db = await database;
+    var res = await db.rawInsert(
+        "REPLACE INTO notes (id,title,body)"
             " VALUES (?,?,?)",
-        [id, note.title, note.body]);
+        [note.id, note.title, note.body]);
+
     return res;
   }
 

@@ -12,8 +12,8 @@ class Note{
   );
 
   Map<String, dynamic> toMap()=>{
-    "id":id,
-    "title": title,
-    "body": body
+    'id':id,
+    'title': title,
+    'body': body
   };
 }

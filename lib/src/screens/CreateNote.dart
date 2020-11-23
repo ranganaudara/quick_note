@@ -62,6 +62,41 @@ class _CreateNoteState extends State<CreateNote> {
             ),
           ],
         ),
+        // child: Column(
+        //   children: [
+        //     TextFormField(
+        //       decoration: InputDecoration(
+        //         border: InputBorder.none,
+        //         hintText: 'Enter title',
+        //         labelText: 'Title',
+        //       ),
+        //       onSaved: (String value){
+        //
+        //       },
+        //       validator: (value) {
+        //         if (value.isEmpty) {
+        //           return 'Please enter some text';
+        //         }
+        //         return null;
+        //       },
+        //     ),
+        //     TextFormField(
+        //       keyboardType: TextInputType.multiline,
+        //       maxLines: null,
+        //       decoration: InputDecoration(
+        //         border: InputBorder.none,
+        //         hintText: 'Enter your note here...',
+        //         labelText: 'Body',
+        //       ),
+        //       validator: (value) {
+        //         if (value.isEmpty) {
+        //           return 'Please enter some text';
+        //         }
+        //         return null;
+        //       },
+        //     ),
+        //   ],
+        // ),
       ),
     );
   }
@@ -71,7 +106,7 @@ class _CreateNoteState extends State<CreateNote> {
     print(_noteDataMap);
     _newNote = Note.fromMap(_noteDataMap);
     try {
-      db.addReminder(_newNote).then((value) {
+      db.insertNote(_newNote).then((value) {
         if (value > 1)
           showDialog(
               context: context,

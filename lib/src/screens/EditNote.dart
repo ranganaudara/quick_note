@@ -78,17 +78,17 @@ class _EditNoteState extends State<EditNote> {
   }
 
   _saveNote() {
-    _noteDataMap = {"title": titleController.text, "body": bodyController.text};
+    _noteDataMap = {"id":widget.note.id ,"title": titleController.text, "body": bodyController.text};
     print(_noteDataMap);
     _newNote = Note.fromMap(_noteDataMap);
     try {
-      db.addReminder(_newNote).then((value) {
+      db.updateNote(_newNote).then((value) {
         if (value > 1)
           showDialog(
               context: context,
               builder: (BuildContext context) {
                 return AlertDialog(
-                  title: Text("Note added successfully!"),
+                  title: Text("Note updated successfully!"),
                   content: ButtonBar(
                     alignment: MainAxisAlignment.center,
                     children: <Widget>[
@@ -110,7 +110,7 @@ class _EditNoteState extends State<EditNote> {
               });
       });
     } catch (e) {
-      print("Error inserting:" + e);
+      print("Error updating:" + e);
     }
   }
 }
